@@ -3,7 +3,7 @@ import { config as dotenvConfig } from 'dotenv';
 import { Client as DiscordClient, MessageEmbed } from 'discord.js';
 import every from 'every.js';
 
-import { channels, FILE_NAME } from './constants';
+import { channels, FILE_NAME, snark } from './constants';
 import TwitchAPI from './twitch';
 
 dotenvConfig();
@@ -12,7 +12,7 @@ const client = new DiscordClient();
 
 client.on('message', msg => {
   if (msg.content.toLowerCase().includes('yeet')) {
-    msg.reply('YOTE!');
+    msg.channel.send('YOTE!');
   }
 });
 
@@ -20,7 +20,7 @@ client.on('ready', () => {
   console.log('Ret-2-go!');
 });
 
-every('5 minutes', async () => {
+every('10 seconds', async () => {
   if (!fs.existsSync(FILE_NAME)) {
     fs.writeFileSync(FILE_NAME, JSON.stringify({ knownChannels: [] }));
   }
@@ -29,15 +29,18 @@ every('5 minutes', async () => {
   const fileData = JSON.parse(fs.readFileSync(FILE_NAME));
 
   const apiResponse = await TwitchAPI.getStreams();
-  const currentlyLiveStreams = apiResponse.data.data.map(stream => stream.user_name);
+  const currentlyLiveStreams = apiResponse.data.data;
 
   // Get the union data
   const notifyAbout = currentlyLiveStreams.filter(
-    stream => !fileData.knownChannels.includes(stream),
+    stream => !fileData.knownChannels.includes(stream.user_name),
   );
 
   // Write the new data back to the file
-  fs.writeFileSync(FILE_NAME, JSON.stringify({ knownData: currentlyLiveStreams }));
+  fs.writeFileSync(
+    FILE_NAME,
+    JSON.stringify({ knownChannels: currentlyLiveStreams.map(s => s.user_name) }),
+  );
 
   const newsChannel = await client.channels.fetch(channels.NEWS);
 
@@ -45,9 +48,15 @@ every('5 minutes', async () => {
     newsChannel.send(
       new MessageEmbed()
         .setColor('#0099ff')
-        .setTitle(stream)
-        .setURL(`https://twitch.tv/${stream}`)
-        .setDescription('...is now playing Axiom Verge on Twitch! Go say hi!'),
+        .setTitle(stream.user_name)
+        .setURL(`https://twitch.tv/${stream.user_name}`)
+        .setThumbnail(stream.thumbnail_url.replace('{width}', '48').replace('{height}', '48'))
+        .setDescription(stream.title)
+        .addFields({
+          name: 'REMEMBER:',
+          value: snark[Math.floor(Math.random() * snark.length)],
+        })
+        .setTimestamp(),
     );
   }
 });
