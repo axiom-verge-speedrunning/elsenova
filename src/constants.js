@@ -8,6 +8,8 @@ export const TWITCH_GAME_ID = '34072';
 
 export const FILE_NAME = 'data.json';
 
+export const EMBED_COLOR = '#0099ff';
+
 export const snark = [
   'Your strats are weak',
   "Falcon could do this faster, but don't tell him I said that",
