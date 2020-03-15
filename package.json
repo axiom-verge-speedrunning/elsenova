@@ -1,0 +1,32 @@
+{
+  "name": "elsenova",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "author": "Mark Rawls",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "prepublishOnly": "yarn run build",
+    "start": "babel-node src/index.js",
+    "lint": "pretty-quick --check src/"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bufferutil": "^4.0.1",
+    "discord.js": "^12.0.2",
+    "dotenv": "^8.2.0",
+    "erlpack": "^0.1.3",
+    "every.js": "^0.0.5",
+    "utf-8-validate": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "be-pretty": "^0.9.4",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
+  }
+}
