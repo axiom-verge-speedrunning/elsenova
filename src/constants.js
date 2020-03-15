@@ -24,4 +24,10 @@ export const snark = [
   'Memes aside, you guys are great. Keep doing you.',
   "It's not *not* frame perfect",
   'Inside the wall saves 30 years',
+  'Why is this bot so mean?',
+  'Write in Thomas Happ for president',
+  'Shoutouts to Angi, my biggest fan!',
+  'Rocket jumps are free',
+  'any% is a meme category, and you cannot change my mind',
+  'This is a dumb category and should not be played by anyone.',
 ];
