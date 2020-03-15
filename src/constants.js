@@ -28,6 +28,6 @@ export const snark = [
   'Write in Thomas Happ for president',
   'Shoutouts to Angi, my biggest fan!',
   'Rocket jumps are free',
-  'any% is a meme category, and you cannot change my mind',
+  'any% YMG is a meme category, and you cannot change my mind',
   'This is a dumb category and should not be played by anyone.',
 ];
