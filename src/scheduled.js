@@ -47,11 +47,8 @@ export const notifyNewStreams = client => async () => {
 
   try {
     const messagesToDelete = await newsChannel.awaitMessages(m => deleteMessageIds.includes(m.id));
-
-    for (const m of messagesToDelete) {
-      await m.delete();
-    }
-  } catch {
+    await newsChannel.bulkDelete(messagesToDelete);
+  } catch (err) {
     console.log('Error deleting messages');
   }
 
@@ -72,7 +69,7 @@ export const notifyNewStreams = client => async () => {
       );
 
       knownChannels[stream.user_name] = message.id;
-    } catch {
+    } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
     }
   }
