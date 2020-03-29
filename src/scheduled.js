@@ -31,7 +31,7 @@ export const notifyNewStreams = client => async () => {
   // Get the inverse of that union
   const deleteMessageIds = Object.entries(fileData.knownChannels).reduce(
     (acc, [userName, messageId]) => {
-      const liveUserNames = notifyAbout.map(s => s.user_name);
+      const liveUserNames = currentlyLiveStreams.map(s => s.user_name);
 
       if (!liveUserNames.includes(userName)) {
         return acc.concat([messageId]);
