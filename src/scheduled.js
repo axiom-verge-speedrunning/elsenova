@@ -46,7 +46,9 @@ export const notifyNewStreams = client => async () => {
   const knownChannels = {};
 
   try {
-    await newsChannel.bulkDelete(deleteMessageIds);
+    for (const mid of deleteMessageIds) {
+      newsChannel.messages.fetch(mid, false).then(m => m.delete());
+    }
   } catch (err) {
     console.log('Error deleting messages');
   }
@@ -68,11 +70,11 @@ export const notifyNewStreams = client => async () => {
       );
 
       knownChannels[stream.user_name] = message.id;
+
+      // Write the new data back to the file immediately
+      fs.writeFileSync(FILE_NAME, JSON.stringify({ knownChannels }));
     } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
     }
   }
-
-  // Write the new data back to the file
-  fs.writeFileSync(FILE_NAME, JSON.stringify({ knownChannels }));
 };
