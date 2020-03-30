@@ -46,8 +46,7 @@ export const notifyNewStreams = client => async () => {
   const knownChannels = {};
 
   try {
-    const messagesToDelete = await newsChannel.awaitMessages(m => deleteMessageIds.includes(m.id));
-    await newsChannel.bulkDelete(messagesToDelete);
+    await newsChannel.bulkDelete(deleteMessageIds);
   } catch (err) {
     console.log('Error deleting messages');
   }
