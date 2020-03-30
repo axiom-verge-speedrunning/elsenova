@@ -9,6 +9,7 @@ import { parseMsg } from './handlers/utils';
 dotenvConfig();
 
 const client = new DiscordClient();
+const checkInterval = Number(process.env.TWITCH_INTERVAL || '30');
 
 client.on('ready', () => {
   console.log('Ret-2-go!');
@@ -32,6 +33,6 @@ client.on('message', msg => {
   }
 });
 
-every('30 seconds', notifyNewStreams(client));
+every(`${checkInterval} seconds`, notifyNewStreams(client));
 
 client.login(process.env.DISCORD_BOT_TOKEN);
