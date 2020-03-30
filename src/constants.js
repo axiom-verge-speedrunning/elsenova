@@ -3,8 +3,8 @@ import { config as dotenvConfig } from 'dotenv';
 dotenvConfig();
 
 export const channels = {
-  GENERAL: proces.env.GENERAL_CHANNEL_ID || '145655554726035456',
-  NEWS: proces.env.NEWS_CHANNEL_ID || '145655876735336448',
+  GENERAL: process.env.GENERAL_CHANNEL_ID || '145655554726035456',
+  NEWS: process.env.NEWS_CHANNEL_ID || '145655876735336448',
 };
 
 export const TWITCH_GAME_ID = '34072';
