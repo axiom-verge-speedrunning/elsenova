@@ -25,7 +25,7 @@ export const notifyNewStreams = client => async () => {
 
   // Get the union data
   const notifyAbout = currentlyLiveStreams.filter(
-    stream => !fileData.knownChannels.hasOwnProperty(stream.user_name),
+    stream => !Object.keys(fileData.knownChannels).includes(stream.user_name),
   );
 
   // Get the inverse of that union
