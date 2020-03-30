@@ -32,6 +32,6 @@ client.on('message', msg => {
   }
 });
 
-every('10 seconds', notifyNewStreams(client));
+every('30 seconds', notifyNewStreams(client));
 
 client.login(process.env.DISCORD_BOT_TOKEN);

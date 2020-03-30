@@ -5,6 +5,8 @@ import { MessageEmbed } from 'discord.js';
 import { channels, FILE_NAME, snark, EMBED_COLOR } from './constants';
 import TwitchAPI from './twitch';
 
+import db from './db';
+
 dotenvConfig();
 
 export const notifyNewStreams = client => async () => {
@@ -13,44 +15,33 @@ export const notifyNewStreams = client => async () => {
     return;
   }
 
-  if (!fs.existsSync(FILE_NAME)) {
-    fs.writeFileSync(FILE_NAME, JSON.stringify({ knownChannels: {} }));
-  }
-
-  // Get the list of known channels currently
-  const fileData = JSON.parse(fs.readFileSync(FILE_NAME));
-
   const apiResponse = await TwitchAPI.getStreams();
   const currentlyLiveStreams = apiResponse.data.data;
+  const liveStreamNames = currentlyLiveStreams.map(s => s.user_name);
+
+  const knownStreams = await db.find({});
+  const knownStreamNames = knownStreams.map(s => s.userName);
 
   // Get the union data
   const notifyAbout = currentlyLiveStreams.filter(
-    stream => !Object.keys(fileData.knownChannels).includes(stream.user_name),
+    stream => !knownStreamNames.includes(stream.user_name),
   );
 
   // Get the inverse of that union
-  const deleteMessageIds = Object.entries(fileData.knownChannels).reduce(
-    (acc, [userName, messageId]) => {
-      const liveUserNames = currentlyLiveStreams.map(s => s.user_name);
-
-      if (!liveUserNames.includes(userName)) {
-        return acc.concat([messageId]);
-      }
-
-      return acc;
-    },
-    [],
-  );
+  const deleteStreams = knownStreams.filter(stream => !liveStreamNames.includes(stream.userName));
 
   const newsChannel = await client.channels.fetch(channels.NEWS);
-  const knownChannels = {};
 
   try {
-    for (const mid of deleteMessageIds) {
-      newsChannel.messages.fetch(mid, false).then(m => m.delete());
+    for (const stream of deleteStreams) {
+      const message = await newsChannel.messages.fetch(stream.messageId, false);
+      message.delete();
+
+      await db.remove(stream);
     }
   } catch (err) {
     console.log('Error deleting messages');
+    console.log(err);
   }
 
   for (const stream of notifyAbout) {
@@ -69,12 +60,10 @@ export const notifyNewStreams = client => async () => {
           .setTimestamp(),
       );
 
-      knownChannels[stream.user_name] = message.id;
-
-      // Write the new data back to the file immediately
-      fs.writeFileSync(FILE_NAME, JSON.stringify({ knownChannels }));
+      await db.insert({ userName: stream.user_name, messageId: message.id });
     } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
+      console.log(err);
     }
   }
 };

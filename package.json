@@ -23,6 +23,7 @@
     "every.js": "^0.0.5",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
+    "nedb-promises": "^4.0.1",
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
