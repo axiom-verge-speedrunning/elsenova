@@ -4,7 +4,7 @@ dotenvConfig();
 
 export const channels = {
   GENERAL: process.env.GENERAL_CHANNEL_ID || '145655554726035456',
-  NEWS: process.env.NEWS_CHANNEL_ID || '145655876735336448',
+  NEWS: process.env.NEWS_CHANNEL_ID || '694375295163039745',
 };
 
 export const TWITCH_GAME_ID = '34072';
