@@ -1,7 +1,13 @@
 import Datastore from 'nedb-promises';
 
-const db = Datastore.create('datastore.db');
+const db = {};
 
-db.persistence.setAutocompactionInterval(5000);
+// Keeping old filename for legacy purposes
+db.streams = Datastore.create('datastore.db');
+db.sandwiches = Datastore.create('sandwiches.db');
+
+for (const database of Object.values(db)) {
+  database.persistence.setAutocompactionInterval(5000);
+}
 
 export default db;

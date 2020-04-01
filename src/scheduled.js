@@ -19,7 +19,7 @@ export const notifyNewStreams = client => async () => {
   const currentlyLiveStreams = apiResponse.data.data;
   const liveStreamNames = currentlyLiveStreams.map(s => s.user_name);
 
-  const knownStreams = await db.find({});
+  const knownStreams = await db.streams.find({});
   const knownStreamNames = knownStreams.map(s => s.userName);
 
   // Get the union data
@@ -37,7 +37,7 @@ export const notifyNewStreams = client => async () => {
       const message = await newsChannel.messages.fetch(stream.messageId, false);
       message.delete();
 
-      await db.remove(stream);
+      await db.streams.remove(stream);
     }
   } catch (err) {
     console.log('Error deleting messages');
@@ -60,7 +60,7 @@ export const notifyNewStreams = client => async () => {
           .setTimestamp(),
       );
 
-      await db.insert({ userName: stream.user_name, messageId: message.id });
+      await db.streams.insert({ userName: stream.user_name, messageId: message.id });
     } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
       console.log(err);

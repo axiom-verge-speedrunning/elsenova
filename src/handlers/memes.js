@@ -1,3 +1,5 @@
+import db from '../db';
+
 const dab = async ({ msg }) => {
   // https://clips.twitch.tv/BeautifulLittleMetalRlyTho
   if (!msg.contains('dab')) {
@@ -27,7 +29,16 @@ const sandwich = async ({ msg, command, args }) => {
     }
 
     for (const arg of args) {
-      if (Math.random() < 0.8) {
+      const existing = await db.sandwiches.findOne({ name: arg.toLowerCase() });
+      let isSandwich = Math.random() < 0.8;
+
+      if (existing !== null) {
+        isSandwich = existing.isSandwich;
+      } else {
+        db.sandwiches.insert({ name: arg.toLowerCase(), isSandwich });
+      }
+
+      if (isSandwich) {
         msg.channel.send(`A "${arg}" is a sandwich`);
       } else {
         msg.channel.send(`A "${arg}" is not a sandwich, but I might change my mind later.`);
