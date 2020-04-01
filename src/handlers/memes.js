@@ -28,9 +28,9 @@ const sandwich = async ({ msg, command, args }) => {
 
     for (const arg of args) {
       if (Math.random() < 0.8) {
-        msg.channel.send(`A(n) "${arg}" is a sandwich`);
+        msg.channel.send(`A "${arg}" is a sandwich`);
       } else {
-        msg.channel.send(`A(n) "${arg}" is not a sandwich, but I might change my mind later.`);
+        msg.channel.send(`A "${arg}" is not a sandwich, but I might change my mind later.`);
       }
     }
   }
