@@ -62,7 +62,7 @@ const vore = async ({ msg, command }) => {
     data = await db.counters.findOne({ name: command });
   }
 
-  if (now - timestamp < 300) {
+  if (now - data.timestamp < 300) {
     msg.channel.send("It hasn't even been 5 minutes, you're basically still talking about vore.");
     return;
   }
