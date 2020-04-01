@@ -38,10 +38,12 @@ const sandwich = async ({ msg, command, args }) => {
         db.sandwiches.insert({ name: arg.toLowerCase(), isSandwich });
       }
 
+      const a = ['a', 'e', 'i', 'o', 'u'].includes(arg.toLowerCase()[0]) ? 'An' : 'A';
+
       if (isSandwich) {
-        msg.channel.send(`A "${arg}" is a sandwich`);
+        msg.channel.send(`${a} ${arg} is a sandwich`);
       } else {
-        msg.channel.send(`A "${arg}" is not a sandwich, I guess`);
+        msg.channel.send(`${a} ${arg} is not a sandwich, I guess`);
       }
     }
   }
