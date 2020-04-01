@@ -1,7 +1,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import routes from './routes';
 import tutorials from './tutorials';
-import * as memeHandlers from './memes';
+import memeHandlers from './memes';
 
 dotenvConfig();
 

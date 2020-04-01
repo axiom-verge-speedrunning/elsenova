@@ -1,4 +1,4 @@
-export const dab = async ({ msg }) => {
+const dab = async ({ msg }) => {
   // https://clips.twitch.tv/BeautifulLittleMetalRlyTho
   if (!msg.contains('dab')) {
     return;
@@ -7,7 +7,7 @@ export const dab = async ({ msg }) => {
   msg.reply('https://clips.twitch.tv/BeautifulLittleMetalRlyTho');
 };
 
-export const yeet = async ({ msg }) => {
+const yeet = async ({ msg }) => {
   if (!msg.contains('yeet')) {
     return;
   }
@@ -15,7 +15,7 @@ export const yeet = async ({ msg }) => {
   msg.channel.send('YOTE!');
 };
 
-export const sandwich = async ({ msg, command, args }) => {
+const sandwich = async ({ msg, command, args }) => {
   if (!msg.contains('sandwich')) {
     return;
   }
@@ -31,3 +31,7 @@ export const sandwich = async ({ msg, command, args }) => {
     }
   }
 };
+
+const handlers = [dab, yeet, sandwich];
+
+export default handlers;
