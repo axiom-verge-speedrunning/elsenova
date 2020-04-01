@@ -81,6 +81,14 @@ const vore = async ({ msg, command }) => {
   msg.channel.send(`We've talked about vore ${data.count} ${timeLabel} now. Stop it.`);
 };
 
-const handlers = [dab, yeet, sandwich, vore];
+const daddy = async ({ msg }) => {
+  if (!message.contains('daddy')) {
+    return;
+  }
+
+  msg.reply('Stop it.');
+};
+
+const handlers = [dab, yeet, sandwich, vore, daddy];
 
 export default handlers;
