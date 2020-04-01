@@ -1,8 +1,8 @@
 import db from '../db';
 
-const dab = async ({ msg }) => {
+const dab = async ({ msg, command }) => {
   // https://clips.twitch.tv/BeautifulLittleMetalRlyTho
-  if (!msg.contains('dab')) {
+  if (command !== '!dab') {
     return;
   }
 
@@ -81,8 +81,8 @@ const vore = async ({ msg, command }) => {
   msg.channel.send(`We've talked about vore ${data.count} ${timeLabel} now. Stop it.`);
 };
 
-const daddy = async ({ msg }) => {
-  if (!msg.contains('daddy')) {
+const daddy = async ({ msg, command }) => {
+  if (command !== '!daddy') {
     return;
   }
 
