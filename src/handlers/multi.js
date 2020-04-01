@@ -1,5 +1,5 @@
-const handler = async ({ msg, cmd, args }) => {
-  if (cmd !== '!multi') {
+const handler = async ({ msg, command, args }) => {
+  if (command !== '!multi') {
     return;
   }
 
