@@ -67,9 +67,12 @@ const vore = async ({ msg, command }) => {
     return;
   }
 
-  data.timestamp = now;
-  data.count += 1;
-  db.counters.update(data);
+  const newData = Object.assign(data);
+  newData.timestamp = now;
+  newData.count += 1;
+  db.counters.update(data, newData);
+
+  Object.assign(data, newData);
 
   const timeLabel = data.count === 1 ? 'time' : 'times';
 
