@@ -41,7 +41,7 @@ const sandwich = async ({ msg, command, args }) => {
       if (isSandwich) {
         msg.channel.send(`A "${arg}" is a sandwich`);
       } else {
-        msg.channel.send(`A "${arg}" is not a sandwich, but I might change my mind later.`);
+        msg.channel.send(`A "${arg}" is not a sandwich, I guess`);
       }
     }
   }
