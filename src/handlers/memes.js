@@ -70,9 +70,9 @@ const vore = async ({ msg, command }) => {
   const newData = Object.assign({}, data);
   newData.timestamp = now;
   newData.count += 1;
-  db.counters.update(data, newData);
+  await db.counters.update(data, newData, {});
 
-  Object.assign(data, newData);
+  data = Object.assign(data, newData);
 
   const timeLabel = data.count === 1 ? 'time' : 'times';
 
