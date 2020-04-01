@@ -67,7 +67,7 @@ const vore = async ({ msg, command }) => {
     return;
   }
 
-  const newData = Object.assign(data);
+  const newData = Object.assign({}, data);
   newData.timestamp = now;
   newData.count += 1;
   db.counters.update(data, newData);
