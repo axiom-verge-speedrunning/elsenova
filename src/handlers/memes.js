@@ -27,7 +27,7 @@ const sandwich = async ({ msg, command, args }) => {
     }
 
     for (const arg of args) {
-      msg.channel.send(`A "${arg.toLowerCase()}" is a sandwich`);
+      msg.channel.send(`A "${arg}" is a sandwich`);
     }
   }
 };
