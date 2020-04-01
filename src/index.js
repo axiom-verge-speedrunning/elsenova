@@ -20,10 +20,6 @@ client.on('message', msg => {
     return;
   }
 
-  if (msg.content.toLowerCase().includes('yeet')) {
-    msg.channel.send('YOTE!');
-  }
-
   const parsed = parseMsg(msg);
 
   for (const handler of handlers) {

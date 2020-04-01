@@ -1,6 +1,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import routes from './routes';
 import tutorials from './tutorials';
+import * as memeHandlers from './memes';
 
 dotenvConfig();
 
@@ -11,6 +12,6 @@ const debugLog = ({ msg }) => {
   console.log(`Processing ${msg.content}`);
 };
 
-const handlers = [debugLog, routes, tutorials];
+const handlers = [debugLog, routes, tutorials, ...memeHandlers];
 
 export default handlers;
