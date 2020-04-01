@@ -82,7 +82,7 @@ const vore = async ({ msg, command }) => {
 };
 
 const daddy = async ({ msg }) => {
-  if (!message.contains('daddy')) {
+  if (!msg.contains('daddy')) {
     return;
   }
 
