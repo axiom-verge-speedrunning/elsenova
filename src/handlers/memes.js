@@ -47,6 +47,35 @@ const sandwich = async ({ msg, command, args }) => {
   }
 };
 
-const handlers = [dab, yeet, sandwich];
+const vore = async ({ msg, command }) => {
+  if (command !== '!vore') {
+    return;
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+
+  let data = await db.counters.findOne({ name: command });
+
+  if (data === null) {
+    db.counters.insert({ name: command, count: 0, timestamp: 0 });
+
+    data = await db.counters.findOne({ name: command });
+  }
+
+  if (now - timestamp < 300) {
+    msg.channel.send("It hasn't even been 5 minutes, you're basically still talking about vore.");
+    return;
+  }
+
+  data.timestamp = now;
+  data.count += 1;
+  db.counters.update(data);
+
+  const timeLabel = data.count === 1 ? 'time' : 'times';
+
+  msg.channel.send(`We've talked about vore ${data.count} ${timeLabel} now. Stop it.`);
+};
+
+const handlers = [dab, yeet, sandwich, vore];
 
 export default handlers;
