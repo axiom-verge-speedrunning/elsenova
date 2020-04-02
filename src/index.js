@@ -6,6 +6,8 @@ import every from 'every.js';
 import handlers from './handlers';
 import { parseMsg } from './handlers/utils';
 
+import { channels } from './constants';
+
 dotenvConfig();
 
 const client = new DiscordClient();
@@ -16,7 +18,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.author.bot) {
+  if (msg.author.bot || msg.channel.id === channels.GENERAL) {
     return;
   }
 
