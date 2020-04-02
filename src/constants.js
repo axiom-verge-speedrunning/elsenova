@@ -3,7 +3,7 @@ import { config as dotenvConfig } from 'dotenv';
 dotenvConfig();
 
 export const channels = {
-  GENERAL: process.env.GENERAL_CHANNEL_ID || '145655554726035456',
+  GENERAL: process.env.GENERAL_CHANNEL_ID || '690653078118072391',
   NEWS: process.env.NEWS_CHANNEL_ID || '694375295163039745',
 };
 
