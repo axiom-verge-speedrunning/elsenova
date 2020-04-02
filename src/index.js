@@ -17,8 +17,9 @@ client.on('ready', () => {
   console.log('Ret-2-go!');
 });
 
-client.on('message', msg => {
-  if (msg.author.bot || msg.channel.id === channels.GENERAL) {
+client.on('message', async msg => {
+  const generalChannel = await client.channels.fetch(channels.GENERAL);
+  if (msg.author.bot || msg.channel.id === generalChannel.id) {
     return;
   }
 
