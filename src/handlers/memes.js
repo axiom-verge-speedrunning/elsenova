@@ -18,29 +18,38 @@ const yeet = async ({ msg }) => {
 };
 
 const sandwich = async ({ msg, command, args }) => {
-  if (!msg.contains('sandwich')) {
+  if (command !== '!sandwich') {
     return;
   }
 
-  if (command === '!sandwich') {
-    const item = args.join(' ');
+  const count = await db.sandwiches.count({});
+  const sandwichCount = await db.sandwiches.count({ isSandwich: true });
+  const notSandwichCount = count - sandwichCount;
 
-    const existing = await db.sandwiches.findOne({ name: item.toLowerCase() });
-    let isSandwich = Math.random() < 0.8;
+  if (args[0] === 'count') {
+    msg.channel.send(
+      `I've classified ${count} different objects. Of those, ${sandwichCount} are sandwiches and ${notSandwichCount} are not.`,
+    );
+    return;
+  }
 
-    if (existing !== null) {
-      isSandwich = existing.isSandwich;
-    } else {
-      db.sandwiches.insert({ name: item.toLowerCase(), isSandwich });
-    }
+  const item = args.join(' ');
 
-    const a = ['a', 'e', 'i', 'o', 'u'].includes(item.toLowerCase()[0]) ? 'An' : 'A';
+  const existing = await db.sandwiches.findOne({ name: item.toLowerCase() });
+  let isSandwich = Math.random() < 0.8;
 
-    if (isSandwich) {
-      msg.channel.send(`${a} ${item} is a sandwich`);
-    } else {
-      msg.channel.send(`${a} ${item} is not a sandwich, I guess`);
-    }
+  if (existing !== null) {
+    isSandwich = existing.isSandwich;
+  } else {
+    db.sandwiches.insert({ name: item.toLowerCase(), isSandwich });
+  }
+
+  const a = ['a', 'e', 'i', 'o', 'u'].includes(item.toLowerCase()[0]) ? 'An' : 'A';
+
+  if (isSandwich) {
+    msg.channel.send(`${a} ${item} is a sandwich`);
+  } else {
+    msg.channel.send(`${a} ${item} is not a sandwich, I guess`);
   }
 };
 
