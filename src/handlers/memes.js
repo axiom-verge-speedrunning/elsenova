@@ -17,6 +17,25 @@ const yeet = async ({ msg }) => {
   msg.channel.send('YOTE!');
 };
 
+const sandwichStatistics = async ({ msg, command }) => {
+  if (!['!sandwiches', '!notsandwiches'].includes(command)) {
+    return;
+  }
+
+  const sandwiches = await db.sandwiches.find({ isSandwich: true });
+  const notSandwiches = await db.sandwiches.find({ isSandwich: false });
+
+  if (command === '!sandwiches') {
+    const list = sandwiches.map(s => s.name).join('\n');
+
+    msg.reply('The following items are sandwiches:\n\n' + list);
+  } else {
+    const list = notSandwiches.map(s => s.name).join('\n');
+
+    msg.reply('The following items are not sandwiches:\n\n' + list);
+  }
+};
+
 const sandwich = async ({ msg, command, args }) => {
   if (command !== '!sandwich') {
     return;
