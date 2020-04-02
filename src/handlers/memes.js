@@ -112,6 +112,6 @@ const daddy = async ({ msg, command }) => {
   msg.reply('Stop it.');
 };
 
-const handlers = [dab, yeet, sandwich, vore, daddy];
+const handlers = [dab, yeet, sandwich, vore, daddy, sandwichStatistics];
 
 export default handlers;
