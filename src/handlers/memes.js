@@ -23,28 +23,23 @@ const sandwich = async ({ msg, command, args }) => {
   }
 
   if (command === '!sandwich') {
-    if (args.length > 3) {
-      msg.reply("There's too many things for me to check here, but they're probably sandwiches.");
-      return;
+    const item = args.join(' ');
+
+    const existing = await db.sandwiches.findOne({ name: item.toLowerCase() });
+    let isSandwich = Math.random() < 0.8;
+
+    if (existing !== null) {
+      isSandwich = existing.isSandwich;
+    } else {
+      db.sandwiches.insert({ name: item.toLowerCase(), isSandwich });
     }
 
-    for (const arg of args) {
-      const existing = await db.sandwiches.findOne({ name: arg.toLowerCase() });
-      let isSandwich = Math.random() < 0.8;
+    const a = ['a', 'e', 'i', 'o', 'u'].includes(item.toLowerCase()[0]) ? 'An' : 'A';
 
-      if (existing !== null) {
-        isSandwich = existing.isSandwich;
-      } else {
-        db.sandwiches.insert({ name: arg.toLowerCase(), isSandwich });
-      }
-
-      const a = ['a', 'e', 'i', 'o', 'u'].includes(arg.toLowerCase()[0]) ? 'An' : 'A';
-
-      if (isSandwich) {
-        msg.channel.send(`${a} ${arg} is a sandwich`);
-      } else {
-        msg.channel.send(`${a} ${arg} is not a sandwich, I guess`);
-      }
+    if (isSandwich) {
+      msg.channel.send(`${a} ${item} is a sandwich`);
+    } else {
+      msg.channel.send(`${a} ${item} is not a sandwich, I guess`);
     }
   }
 };
