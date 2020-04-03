@@ -16,4 +16,4 @@ const debugLog = ({ msg }) => {
 
 export const handlers = [debugLog, routes, tutorials, multi];
 
-export const allHandlers = [...handlers, ...allHandlers];
+export const allHandlers = [...handlers, ...memeHandlers];
