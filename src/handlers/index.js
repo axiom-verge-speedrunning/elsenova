@@ -14,6 +14,6 @@ const debugLog = ({ msg }) => {
   console.log(`Processing ${msg.content}`);
 };
 
-const handlers = [debugLog, routes, tutorials, multi, ...memeHandlers];
+export const handlers = [debugLog, routes, tutorials, multi];
 
-export default handlers;
+export const allHandlers = [...handlers, ...allHandlers];

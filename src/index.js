@@ -3,7 +3,7 @@ import { Client as DiscordClient } from 'discord.js';
 import { notifyNewStreams } from './scheduled';
 import every from 'every.js';
 
-import handlers from './handlers';
+import { handlers, allHandlers } from './handlers';
 import { parseMsg } from './handlers/utils';
 
 import { channels } from './constants';
@@ -19,13 +19,20 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
   const generalChannel = await client.channels.fetch(channels.GENERAL);
-  if (msg.author.bot || msg.channel.id === generalChannel.id) {
+
+  let handlerList = [...allHandlers];
+
+  if (msg.author.bot) {
     return;
+  }
+
+  if (msg.channel.id === generalChannel.id) {
+    handlerList = [...handlers];
   }
 
   const parsed = parseMsg(msg);
 
-  for (const handler of handlers) {
+  for (const handler of handlerList) {
     try {
       handler(parsed);
     } catch {}
