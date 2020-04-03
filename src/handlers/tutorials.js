@@ -25,7 +25,7 @@ const makeEmbed = t =>
     .addFields({ name: 'Author', value: t.author.username })
     .setTimestamp();
 
-const handler = async ({ command, msg }) => {
+const handler = async ({ command, msg, args }) => {
   if (!['!tutorials', '!tuts', '!tutorial'].includes(command)) {
     return;
   }
@@ -34,7 +34,15 @@ const handler = async ({ command, msg }) => {
     data: { tutorials },
   } = await gqlClient.query({ query: ALL_TUTORIALS });
 
-  for (const tutorial of tutorials) {
+  const filter = item => {
+    if (args.length === 0) {
+      return true;
+    }
+
+    return item.title.toLowerCase().includes(args.join(' ').toLowerCase());
+  };
+
+  for (const tutorial of tutorials.filter(filter)) {
     msg.channel.send(makeEmbed(tutorial));
   }
 };
