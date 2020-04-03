@@ -42,6 +42,11 @@ const handler = async ({ command, msg, args }) => {
     return item.title.toLowerCase().includes(args.join(' ').toLowerCase());
   };
 
+  if (tutorials.filter(filter).length > 5) {
+    msg.reply('More than 5 results were returned, please enter a search term to narrow it down!');
+    return;
+  }
+
   for (const tutorial of tutorials.filter(filter)) {
     msg.channel.send(makeEmbed(tutorial));
   }
