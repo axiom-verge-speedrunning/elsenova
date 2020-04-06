@@ -38,7 +38,7 @@ const handler = async ({ command, msg }) => {
 
   const {
     data: { routes },
-  } = await gqlClient.query({ query: ALL_ROUTES });
+  } = await gqlClient.query({ query: ALL_ROUTES, fetchPolicy: 'no-cache' });
 
   for (const route of routes) {
     msg.channel.send(makeEmbed(route));

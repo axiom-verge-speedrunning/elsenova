@@ -32,7 +32,7 @@ const handler = async ({ command, msg, args }) => {
 
   const {
     data: { tutorials },
-  } = await gqlClient.query({ query: ALL_TUTORIALS });
+  } = await gqlClient.query({ query: ALL_TUTORIALS, fetchPolicy: 'no-cache' });
 
   const filter = item => {
     if (args.length === 0) {
