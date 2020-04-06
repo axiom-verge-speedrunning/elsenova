@@ -41,11 +41,11 @@ const sandwich = async ({ msg, command, args }) => {
     return;
   }
 
-  const count = await db.sandwiches.count({});
-  const sandwichCount = await db.sandwiches.count({ isSandwich: true });
-  const notSandwichCount = count - sandwichCount;
-
   if (args[0] === 'count') {
+    const count = await db.sandwiches.count({});
+    const sandwichCount = await db.sandwiches.count({ isSandwich: true });
+    const notSandwichCount = count - sandwichCount;
+
     msg.channel.send(
       `I've classified ${count} different objects. Of those, ${sandwichCount} are sandwiches and ${notSandwichCount} are not.`,
     );
