@@ -87,10 +87,6 @@ const vore = async ({ msg, command }) => {
     data = await db.counters.findOne({ name: command });
   }
 
-  if (data.count >= 420) {
-    return;
-  }
-
   if (now - data.timestamp < 600) {
     msg.channel.send("It hasn't even been 10 minutes, you're basically still talking about vore.");
     return;
@@ -102,6 +98,10 @@ const vore = async ({ msg, command }) => {
   await db.counters.update(data, newData, {});
 
   data = Object.assign(data, newData);
+
+  if (data.count >= 420) {
+    return;
+  }
 
   const timeLabel = data.count === 1 ? 'time' : 'times';
   const admonishment = data.count === 420 ? '*Nice*.' : 'Stop it.';
