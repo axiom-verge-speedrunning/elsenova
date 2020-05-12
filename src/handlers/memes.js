@@ -99,7 +99,7 @@ const vore = async ({ msg, command }) => {
 
   data = Object.assign(data, newData);
 
-  if (data.count >= 420) {
+  if (data.count > 420) {
     return;
   }
 
