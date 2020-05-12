@@ -26,11 +26,11 @@ const sandwichStatistics = async ({ msg, command }) => {
   const notSandwiches = await db.sandwiches.find({ isSandwich: false });
 
   if (command === '!sandwiches') {
-    const list = sandwiches.map(s => s.name).join('\n');
+    const list = sandwiches.map((s) => s.name).join('\n');
 
     msg.reply('The following items are sandwiches:\n\n' + list);
   } else {
-    const list = notSandwiches.map(s => s.name).join('\n');
+    const list = notSandwiches.map((s) => s.name).join('\n');
 
     msg.reply('The following items are not sandwiches:\n\n' + list);
   }
@@ -85,6 +85,10 @@ const vore = async ({ msg, command }) => {
     db.counters.insert({ name: command, count: 0, timestamp: 0 });
 
     data = await db.counters.findOne({ name: command });
+  }
+
+  if (data.count >= 420) {
+    return;
   }
 
   if (now - data.timestamp < 600) {
