@@ -100,8 +100,9 @@ const vore = async ({ msg, command }) => {
   data = Object.assign(data, newData);
 
   const timeLabel = data.count === 1 ? 'time' : 'times';
+  const admonishment = data.count === 420 ? '*Nice*.' : 'Stop it.';
 
-  msg.channel.send(`We've talked about vore ${data.count} ${timeLabel} now. Stop it.`);
+  msg.channel.send(`We've talked about vore ${data.count} ${timeLabel} now. ${admonishment}`);
 };
 
 const daddy = async ({ msg, command }) => {
