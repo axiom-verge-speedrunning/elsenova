@@ -17,6 +17,7 @@ class TwitchAPI {
           client_secret: process.env.TWITCH_CLIENT_SECRET,
           grant_type: 'client_credentials',
         },
+        headers: HEADERS,
       },
     );
   }
