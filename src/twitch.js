@@ -23,15 +23,19 @@ class TwitchAPI {
   }
 
   static async getStreams() {
-    const response = await this.getToken();
-    const authToken = response.data.access_token;
+    try {
+      const response = await this.getToken();
+      const authToken = response.data.access_token;
 
-    return axios.get('https://api.twitch.tv/helix/streams', {
-      params: {
-        game_id: TWITCH_GAME_ID,
-      },
-      headers: { ...HEADERS, Authorization: `Bearer ${authToken}` },
-    });
+      return axios.get('https://api.twitch.tv/helix/streams', {
+        params: {
+          game_id: TWITCH_GAME_ID,
+        },
+        headers: { ...HEADERS, Authorization: `Bearer ${authToken}` },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 
