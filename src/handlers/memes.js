@@ -18,7 +18,7 @@ const yeet = async ({ msg }) => {
 };
 
 const sandwichStatistics = async ({ msg, command }) => {
-  if (!['!sandwiches', '!notsandwiches'].includes(command)) {
+  if (!['!sandwiches', '!notsandwiches', '!dumplings'].includes(command)) {
     return;
   }
 
@@ -32,12 +32,12 @@ const sandwichStatistics = async ({ msg, command }) => {
   } else {
     const list = notSandwiches.map((s) => s.name).join('\n');
 
-    msg.reply('The following items are not sandwiches:\n\n' + list);
+    msg.reply('The following items are dumplings:\n\n' + list);
   }
 };
 
 const sandwich = async ({ msg, command, args }) => {
-  if (command !== '!sandwich') {
+  if (!['!sandwich', '!dumpling'].includes(command)) {
     return;
   }
 
@@ -47,7 +47,7 @@ const sandwich = async ({ msg, command, args }) => {
     const notSandwichCount = count - sandwichCount;
 
     msg.channel.send(
-      `I've classified ${count} different objects. Of those, ${sandwichCount} are sandwiches and ${notSandwichCount} are not.`,
+      `I've classified ${count} different objects. Of those, ${sandwichCount} are sandwiches and ${notSandwichCount} are dumplings.`,
     );
     return;
   }
@@ -68,7 +68,7 @@ const sandwich = async ({ msg, command, args }) => {
   if (isSandwich) {
     msg.channel.send(`${a} ${item} is a sandwich`);
   } else {
-    msg.channel.send(`${a} ${item} is not a sandwich, I guess`);
+    msg.channel.send(`${a} ${item} is a dumpling`);
   }
 };
 
