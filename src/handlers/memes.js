@@ -99,10 +99,6 @@ const vore = async ({ msg, command }) => {
 
   data = Object.assign(data, newData);
 
-  if (data.count > 420) {
-    return;
-  }
-
   const timeLabel = data.count === 1 ? 'time' : 'times';
   const admonishment = data.count === 420 ? '*Nice*.' : 'Stop it.';
 
