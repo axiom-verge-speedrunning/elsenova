@@ -39,6 +39,6 @@ client.on('message', async msg => {
   }
 });
 
-every(`${checkInterval} seconds`, notifyNewStreams(client));
+every(`${checkInterval} seconds`, () => {notifyNewStreams(client)().catch(console.log)});
 
 client.login(process.env.DISCORD_BOT_TOKEN);
