@@ -1,17 +1,19 @@
-import Datastore from 'nedb-promises';
+import { MongoClient } from 'mongodb';
 
-const db = {};
+const db = (async () => {
+  const client = new MongoClient('mongodb://db:27017/elsenova', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-// Keeping old filename for legacy purposes
-db.streams = Datastore.create('datastore.db');
-db.sandwiches = Datastore.create('sandwiches.db');
-db.counters = Datastore.create('counters.db');
+  await client.connect();
 
-db.sandwiches.ensureIndex({ fieldName: 'name' });
-db.sandwiches.ensureIndex({ fieldName: 'isSandwich' });
+  return client.db('elsenova');
+})();
 
-for (const database of Object.values(db)) {
-  database.persistence.setAutocompactionInterval(5000);
-}
+export const collection = async (name) => {
+  const dbInterface = await db;
+  return dbInterface.collection(name);
+};
 
 export default db;

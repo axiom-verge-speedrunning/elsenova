@@ -1,4 +1,4 @@
-import db from '../db';
+import { collection } from '../db';
 
 const dab = async ({ msg, command }) => {
   // https://clips.twitch.tv/BeautifulLittleMetalRlyTho
@@ -22,8 +22,10 @@ const sandwichStatistics = async ({ msg, command }) => {
     return;
   }
 
-  const sandwiches = await db.sandwiches.find({ isSandwich: true });
-  const notSandwiches = await db.sandwiches.find({ isSandwich: false });
+  const sandwichesCollection = await collection('sandwiches');
+
+  const sandwiches = await sandwichesCollection.find({ isSandwich: true });
+  const notSandwiches = await sandwichesCollection.find({ isSandwich: false });
 
   if (command === '!sandwiches') {
     const list = sandwiches.map((s) => s.name).join('\n');
@@ -41,9 +43,11 @@ const sandwich = async ({ msg, command, args }) => {
     return;
   }
 
+  const sandwichesCollection = await collection('sandwiches');
+
   if (args[0] === 'count') {
-    const count = await db.sandwiches.count({});
-    const sandwichCount = await db.sandwiches.count({ isSandwich: true });
+    const count = await sandwichesCollection.count({});
+    const sandwichCount = await sandwichesCollection.count({ isSandwich: true });
     const notSandwichCount = count - sandwichCount;
 
     msg.channel.send(
@@ -54,13 +58,13 @@ const sandwich = async ({ msg, command, args }) => {
 
   const item = args.join(' ');
 
-  const existing = await db.sandwiches.findOne({ name: item.toLowerCase() });
+  const existing = await sandwichesCollection.findOne({ name: item.toLowerCase() });
   let isSandwich = Math.random() < 0.8;
 
   if (existing !== null) {
     isSandwich = existing.isSandwich;
   } else {
-    db.sandwiches.insert({ name: item.toLowerCase(), isSandwich });
+    sandwichesCollection.insert({ name: item.toLowerCase(), isSandwich });
   }
 
   const a = ['a', 'e', 'i', 'o', 'u'].includes(item.toLowerCase()[0]) ? 'An' : 'A';
@@ -77,14 +81,16 @@ const vore = async ({ msg, command }) => {
     return;
   }
 
+  const counters = await collection('counters');
+
   const now = Math.floor(Date.now() / 1000);
 
-  let data = await db.counters.findOne({ name: command });
+  let data = await counters.findOne({ name: command });
 
   if (data === null) {
-    db.counters.insert({ name: command, count: 0, timestamp: 0 });
+    counters.insert({ name: command, count: 0, timestamp: 0 });
 
-    data = await db.counters.findOne({ name: command });
+    data = await counters.findOne({ name: command });
   }
 
   if (now - data.timestamp < 300) {
@@ -95,7 +101,7 @@ const vore = async ({ msg, command }) => {
   const newData = Object.assign({}, data);
   newData.timestamp = now;
   newData.count += 1;
-  await db.counters.update(data, newData, {});
+  await counters.update(data, newData, {});
 
   data = Object.assign(data, newData);
 

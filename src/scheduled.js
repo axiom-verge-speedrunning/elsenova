@@ -5,30 +5,31 @@ import { MessageEmbed } from 'discord.js';
 import { channels, FILE_NAME, snark, EMBED_COLOR } from './constants';
 import TwitchAPI from './twitch';
 
-import db from './db';
+import { collection } from './db';
 
 dotenvConfig();
 
-export const notifyNewStreams = client => async () => {
+export const notifyNewStreams = (client) => async () => {
   // Don't send any messages if we're testing
   if (process.env.DEBUG) {
     return;
   }
+  const streams = await collection('streams');
 
   const apiResponse = await TwitchAPI.getStreams();
   const currentlyLiveStreams = apiResponse.data.data;
-  const liveStreamNames = currentlyLiveStreams.map(s => s.user_name);
+  const liveStreamNames = currentlyLiveStreams.map((s) => s.user_name);
 
-  const knownStreams = await db.streams.find({});
-  const knownStreamNames = knownStreams.map(s => s.userName);
+  const knownStreams = await streams.find({});
+  const knownStreamNames = knownStreams.map((s) => s.userName);
 
   // Get the union data
   const notifyAbout = currentlyLiveStreams.filter(
-    stream => !knownStreamNames.includes(stream.user_name),
+    (stream) => !knownStreamNames.includes(stream.user_name),
   );
 
   // Get the inverse of that union
-  const deleteStreams = knownStreams.filter(stream => !liveStreamNames.includes(stream.userName));
+  const deleteStreams = knownStreams.filter((stream) => !liveStreamNames.includes(stream.userName));
 
   const newsChannel = await client.channels.fetch(channels.NEWS);
 
@@ -37,7 +38,7 @@ export const notifyNewStreams = client => async () => {
       const message = await newsChannel.messages.fetch(stream.messageId, false);
       message.delete();
 
-      await db.streams.remove(stream);
+      await streams.remove(stream);
     }
   } catch (err) {
     console.log('Error deleting messages');
@@ -60,7 +61,7 @@ export const notifyNewStreams = client => async () => {
           .setTimestamp(),
       );
 
-      await db.streams.insert({ userName: stream.user_name, messageId: message.id });
+      await streams.insert({ userName: stream.user_name, messageId: message.id });
     } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
       console.log(err);

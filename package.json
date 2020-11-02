@@ -9,7 +9,7 @@
     "build": "babel src --out-dir lib",
     "prepublishOnly": "yarn run build",
     "start": "node lib/index.js",
-    "dev": "babel-node src/index.js",
+    "dev": "nodemon --exec 'yarn babel-node src/index.js' -e '.js'",
     "lint": "pretty-quick --check src/"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "every.js": "^0.0.5",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
+    "mongodb": "^3.6.2",
     "nedb-promises": "^4.0.1",
     "utf-8-validate": "^5.0.2"
   },
@@ -32,6 +33,7 @@
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "be-pretty": "^0.9.4",
+    "nodemon": "^2.0.6",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
   }
