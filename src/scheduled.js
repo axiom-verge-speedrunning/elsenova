@@ -20,7 +20,7 @@ export const notifyNewStreams = (client) => async () => {
   const currentlyLiveStreams = apiResponse.data.data;
   const liveStreamNames = currentlyLiveStreams.map((s) => s.user_name);
 
-  const knownStreams = await streams.find({});
+  const knownStreams = await streams.find({}).toArray();
   const knownStreamNames = knownStreams.map((s) => s.userName);
 
   // Get the union data

@@ -24,8 +24,8 @@ const sandwichStatistics = async ({ msg, command }) => {
 
   const sandwichesCollection = await collection('sandwiches');
 
-  const sandwiches = await sandwichesCollection.find({ isSandwich: true });
-  const notSandwiches = await sandwichesCollection.find({ isSandwich: false });
+  const sandwiches = await sandwichesCollection.find({ isSandwich: true }).toArray();
+  const notSandwiches = await sandwichesCollection.find({ isSandwich: false }).toArray();
 
   if (command === '!sandwiches') {
     const list = sandwiches.map((s) => s.name).join('\n');
