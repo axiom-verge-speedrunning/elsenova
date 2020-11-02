@@ -64,7 +64,7 @@ const sandwich = async ({ msg, command, args }) => {
   if (existing !== null) {
     isSandwich = existing.isSandwich;
   } else {
-    sandwichesCollection.insert({ name: item.toLowerCase(), isSandwich });
+    sandwichesCollection.insertOne({ name: item.toLowerCase(), isSandwich });
   }
 
   const a = ['a', 'e', 'i', 'o', 'u'].includes(item.toLowerCase()[0]) ? 'An' : 'A';
@@ -88,7 +88,7 @@ const vore = async ({ msg, command }) => {
   let data = await counters.findOne({ name: command });
 
   if (data === null) {
-    counters.insert({ name: command, count: 0, timestamp: 0 });
+    counters.insertOne({ name: command, count: 0, timestamp: 0 });
 
     data = await counters.findOne({ name: command });
   }

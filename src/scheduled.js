@@ -61,7 +61,7 @@ export const notifyNewStreams = (client) => async () => {
           .setTimestamp(),
       );
 
-      await streams.insert({ userName: stream.user_name, messageId: message.id });
+      await streams.insertOne({ userName: stream.user_name, messageId: message.id });
     } catch (err) {
       console.log(`Error notifying about ${stream.user_name}`);
       console.log(err);
