@@ -77,7 +77,7 @@ const sandwich = async ({ msg, command, args }) => {
 };
 
 const vore = async ({ msg, command }) => {
-  if (command !== '!vore') {
+  if (!['!vore', '!v0r3'].includes(command)) {
     return;
   }
 
