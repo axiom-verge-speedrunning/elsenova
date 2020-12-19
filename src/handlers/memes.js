@@ -85,7 +85,7 @@ const vore = async ({ msg, command }) => {
 
   const now = Math.floor(Date.now() / 1000);
 
-  let data = await counters.findOne({ name: command });
+  let data = await counters.findOne({ name: '!vore' });
 
   if (data === null) {
     counters.insertOne({ name: command, count: 0, timestamp: 0 });
