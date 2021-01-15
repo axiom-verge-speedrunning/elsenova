@@ -4,6 +4,7 @@ import alias from './alias';
 import remove from './remove';
 import permissions from './permissions';
 import edit from './edit';
-import count from './count';
+import vore from './vore';
+import sandwich from './sandwich';
 
-export default [add, alias, remove, permissions, edit, count].map(wrapHandlerFunc);
+export default [add, alias, remove, permissions, edit, vore, sandwich].map(wrapHandlerFunc);

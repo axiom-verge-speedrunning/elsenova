@@ -17,30 +17,12 @@ client.on('ready', () => {
   console.log('Ret-2-go!');
 });
 
-const countSheepo = async message => {
-  if (message.content.toLowerCase().includes('sheepo')) {
-    const count = await getNextSequence('sheepo');
-    const prelude = `We have now said Sheepo ${count} times!`;
-
-    if (count === 420) {
-      message.channel.send(`${prelude} *Nice.*`);
-    }
-
-    if (count % 100 === 0) {
-      message.channel.send(prelude);
-    }
-  }
-};
-
 client.on('message', async message => {
   if (message.author.bot) {
     return;
   }
 
   const parsed = whisparse(message.content);
-
-  await countSheepo(message);
-
   if (!parsed) {
     return;
   }
