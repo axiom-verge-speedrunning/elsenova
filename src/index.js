@@ -1,6 +1,5 @@
 import 'environment';
 
-import pupa from 'pupa';
 import every from 'every.js';
 import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
@@ -31,7 +30,7 @@ client.on('message', async message => {
   console.log(parsed);
 
   const dbCommand = await findCommand(parsed.command);
-  const dbHandler = ({ say }) => say(pupa(dbCommand.output, context));
+  const dbHandler = ({ say }) => say(dbCommand.output);
   if (dbCommand) {
     dbHandler.command = dbCommand._id;
     Object.assign(dbHandler, dbCommand);
