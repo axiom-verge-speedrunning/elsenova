@@ -1,5 +1,6 @@
 import 'environment';
 
+import pupa from 'pupa';
 import every from 'every.js';
 import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
