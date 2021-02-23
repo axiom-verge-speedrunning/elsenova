@@ -27,8 +27,6 @@ client.on('message', async message => {
     return;
   }
 
-  console.log(parsed);
-
   const dbCommand = await findCommand(parsed.command);
   const dbHandler = ({ say }) => say(dbCommand.output);
   if (dbCommand) {
