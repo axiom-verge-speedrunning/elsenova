@@ -11,7 +11,7 @@ const getHashCode = s => {
 
 const seed = async ({ say, args, argsString }) => {
   if (args.length) {
-    say(Math.abs(getHashCode(argsString)));
+    say(String(Math.abs(getHashCode(argsString))).padStart(10, '0'));
     return;
   }
 
