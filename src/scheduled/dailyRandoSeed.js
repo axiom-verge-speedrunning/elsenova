@@ -2,11 +2,7 @@ import { MessageEmbed } from 'discord.js';
 import { getCollection } from 'db';
 
 import { RANDO_NEWS_CHANNEL_ID, EMBED_COLOR } from 'constants';
-
-const SEED_MIN = 0;
-const SEED_MAX = 9999999999; // Any postive 10 digit integer
-
-const getRandomNumber = () => Math.floor(Math.random() * SEED_MAX);
+import { getRandomizerSeed } from 'utils';
 
 const dailyRandoSeed = client => async () => {
   const seeds = await getCollection('seeds');
@@ -15,7 +11,7 @@ const dailyRandoSeed = client => async () => {
   let seed = '';
 
   while (existing) {
-    seed = String(getRandomNumber()).padStart(10, '0');
+    seed = getRandomizerSeed();
     existing = await seeds.findOne({ _id: seed });
   }
 

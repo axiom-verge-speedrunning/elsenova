@@ -17,7 +17,7 @@ const vore = async ({ say }) => {
     return;
   }
 
-  const newData = Object.assign({}, data);
+  const newData = { ...data};
 
   newData.timestamp = now;
   newData.count += 1;
