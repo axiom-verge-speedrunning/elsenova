@@ -1,10 +1,11 @@
 import 'environment';
 
 import every from 'every.js';
+import { scheduleJob } from 'node-schedule';
 import { Client as DiscordClient } from 'discord.js';
 import whisparse from 'whisparse';
 
-import notifyNewStreams from 'scheduled';
+import { notifyStreams, dailyRandoSeed } from 'scheduled';
 import { findCommand } from 'db';
 import { wrapHandlerFunc, getPermissionsLevel } from 'utils';
 
@@ -49,7 +50,11 @@ client.on('message', async message => {
 });
 
 every(`${checkInterval} seconds`, () => {
-  notifyNewStreams(client)().catch(console.log);
+  notifyStreams(client)().catch(console.log);
+});
+
+scheduleJob('0 0 0 * *', () => {
+  dailyRandoSeed(client)().catch(console.log);
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);

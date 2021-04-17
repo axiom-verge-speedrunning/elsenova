@@ -1,0 +1,41 @@
+import { MessageEmbed } from 'discord.js';
+import { getCollection } from 'db';
+
+import { RANDO_NEWS_CHANNEL_ID, EMBED_COLOR } from 'constants';
+
+const SEED_MIN = 0;
+const SEED_MAX = 9999999999; // Any postive 10 digit integer
+
+const getRandomNumber = () => Math.floor(Math.random() * SEED_MAX);
+
+const dailyRandoSeed = client => async () => {
+  const seeds = await getCollection('seeds');
+  const now = new Date();
+  let existing = true;
+  let seed = '';
+
+  while (existing) {
+    seed = String(getRandomNumber()).padStart(10, '0');
+    existing = await seeds.findOne({ _id: seed });
+  }
+
+  const month = now.toLocaleString('default', { month: 'long' });
+
+  const dateString = `${now.getDate()} ${month} ${now.getFullYear()}`;
+
+  const newsChannel = await client.channels.fetch(RANDO_NEWS_CHANNEL_ID);
+  await newsChannel.send(
+    new MessageEmbed()
+      .setColor(EMBED_COLOR)
+      .setTitle(`Daily Randomizer Seed!`)
+      .setDescription('<@&823674572855181332>')
+      .addFields(
+        { name: 'Seed', value: seed, inline: true },
+        { name: 'Date', value: dateString, inline: true },
+      )
+      .setTimestamp(),
+  );
+  await seeds.insertOne({ _id: seed, created: now.valueOf() });
+};
+
+export default dailyRandoSeed;
