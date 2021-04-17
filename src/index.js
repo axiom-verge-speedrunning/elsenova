@@ -53,7 +53,7 @@ every(`${checkInterval} seconds`, () => {
   notifyStreams(client)().catch(console.log);
 });
 
-scheduleJob('0 0 0 * *', () => {
+scheduleJob('0 0 * * *', () => {
   dailyRandoSeed(client)().catch(console.log);
 });
 
