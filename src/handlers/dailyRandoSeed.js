@@ -3,7 +3,7 @@ import { getCollection } from 'db';
 
 import { RANDO_NEWS_CHANNEL_ID, EMBED_COLOR } from 'constants';
 import { getRandomizerSeed } from 'utils';
-import { permissionsLevel } from 'enums';
+import { PermissionsLevel } from 'enums';
 
 const dailyRandoSeed = async ({ client }) => {
   const seeds = await getCollection('seeds');
