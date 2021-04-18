@@ -7,5 +7,8 @@ import edit from './edit';
 import vore from './vore';
 import sandwich from './sandwich';
 import seed from './seed';
+import dailyRandoSeed from './dailyRandoSeed';
 
-export default [add, alias, remove, permissions, edit, vore, sandwich, seed].map(wrapHandlerFunc);
+export default [add, alias, remove, permissions, edit, vore, sandwich, seed, dailyRandoSeed].map(
+  wrapHandlerFunc,
+);

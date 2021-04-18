@@ -42,6 +42,7 @@ client.on('message', async message => {
     handler({
       ...parsed,
       message,
+      client,
       // This should be unnecessary, but discord.js is a truly terrible library
       say: msg => message.channel.send(msg),
       reply: msg => message.reply(msg),
